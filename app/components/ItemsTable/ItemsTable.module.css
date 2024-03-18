@@ -1,0 +1,85 @@
+.itemsContainer {
+  width: 70%;
+  margin: auto;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  border-radius: 8px;
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  -ms-border-radius: 8px;
+  -o-border-radius: 8px;
+  box-shadow: -3px 3px 4px rgba(0, 0, 0, 0.2);
+  overflow: auto;
+}
+
+.iconButton {
+  height: 30px;
+  width: 30px;
+  background-color: transparent;
+  color: #000;
+  opacity: 0.6;
+  font-size: 2rem;
+  border: none;
+  cursor: pointer;
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
+  transition: all 0.3s ease-in-out;
+  -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  -ms-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
+}
+
+.iconButton:hover {
+  opacity: 1;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.th,
+.td {
+  height: 50px;
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+}
+.th {
+  background-color: #000;
+  color: #fff;
+  font-weight: bold;
+}
+
+.tbody {
+  background-color: rgba(0, 0, 0, 0.12);
+  color: #000;
+}
+
+.tr {
+  border-bottom: 1px solid grey;
+}
+
+@media screen and (max-width: 992px) {
+  .itemsContainer {
+    width: 85%;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .itemsContainer {
+    width: 90%;
+  }
+
+  .tr {
+    margin-bottom: 12px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .itemsContainer {
+    width: 95%;
+  }
+}

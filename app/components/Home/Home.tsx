@@ -1,11 +1,10 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { IoIosAddCircle } from "react-icons/io";
+import { useState, useEffect, ChangeEvent } from "react";
+import { FaShoppingCart } from "react-icons/fa";
 
 import styles from "./Home.module.css";
-// import items from "../../../public/itemsData.json";
-// console.log("🚀 ~ items:", items);
+import ItemsTable from "../ItemsTable/ItemsTable";
 
 interface Item {
   id: number;
@@ -16,6 +15,10 @@ interface Item {
 
 const HomePage = () => {
   const [items, setItems] = useState<Item[]>([]);
+  const [searchQuery, setSearchQuery] = useState<string>("");
+  const [priceFilter, setPriceFilter] = useState<number | null>(null);
+  const [minPrice, setMinPrice] = useState<number | null>(null);
+  const [maxPrice, setMaxPrice] = useState<number | null>(null);
 
   useEffect(() => {
     fetchItems();
@@ -31,90 +34,84 @@ const HomePage = () => {
       console.log(error.message);
     }
   };
+
+  const searchHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(e.target.value);
+  };
+
+  const priceFilterHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    let value = parseInt(e.target.value) || null;
+    setPriceFilter(value);
+  };
+
+  const minPriceHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    let value = parseInt(e.target.value) || null;
+    setMinPrice(value);
+  };
+
+  const maxPriceHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    let value = parseInt(e.target.value) || null;
+    setMaxPrice(value);
+  };
+
+  const filteredItems = items.filter((item) => {
+    const nameMatch = item.name
+      .toLowerCase()
+      .includes(searchQuery.toLowerCase());
+    const priceFilterMatch = priceFilter === null || item.price === priceFilter;
+    const priceRangeMatch =
+      (minPrice === null || item.price >= minPrice) &&
+      (maxPrice === null || item.price <= maxPrice);
+    return nameMatch && priceFilterMatch && priceRangeMatch;
+  });
+  console.log("🚀 ~ filteredItems ~ filteredItems:", filteredItems);
+
   return (
     <main className={styles.main}>
-      <section className={styles.itemsContainer}>
-        <table className={styles.table}>
-          <thead className={styles.thead}>
-            <tr className={styles.tr}>
-              <th className={styles.th}>Name</th>
-              <th className={styles.th}>Description</th>
-              <th className={styles.th}>Price</th>
-              <th className={styles.th}>add to cart</th>
-            </tr>
-          </thead>
-          <tbody className={styles.tbody}>
-            {items.map((item) => (
-              <tr key={item.id} className={styles.tr}>
-                <td className={styles.td}>{item.name}</td>
-                <td className={styles.td}>{item.description}</td>
-                <td className={styles.td}>{item.price}</td>
-                <td className={styles.td}>
-                  <button className={styles.iconButton}>
-                    <IoIosAddCircle />
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </section>
+      <div className={styles.cartBadge}>
+        <FaShoppingCart size={50} />
+        <p className={styles.cartNumber}>4</p>
+      </div>
+      <div className={styles.searchbarContainer}>
+        <input
+          type="text"
+          value={searchQuery}
+          onChange={searchHandler}
+          placeholder="Search by item name"
+          className={styles.searchbar}
+        />
+      </div>
+      <br />
+      <div className={styles.filtersContainer}>
+        <input
+          type="number"
+          value={priceFilter || ""}
+          onChange={priceFilterHandler}
+          placeholder="Price"
+          className={styles.filterInput}
+          style={{ width: "30%" }}
+        />
+        <div className={styles.priceRangeContainer}>
+          <input
+            type="number"
+            value={minPrice || ""}
+            onChange={minPriceHandler}
+            placeholder="Min price"
+            className={styles.filterInput}
+          />
+          <input
+            type="number"
+            value={maxPrice || ""}
+            onChange={maxPriceHandler}
+            placeholder="Max price"
+            className={styles.filterInput}
+          />
+        </div>
+      </div>
+      <br />
+      <ItemsTable items={filteredItems} />
     </main>
   );
 };
 
 export default HomePage;
-
-{
-  /* <section className={styles.itemsContainer}>
-<div className={styles.gridContainer}>
-  {Object.keys(items[0]).map((key) => (
-    <>
-      {key !== "id" && (
-        <div key={key}>
-          <h3 className={`${styles.gridItem} ${styles.head}`}>{key}</h3>
-          <ul>
-            {items.map((item: any) => (
-              <li key={item.id} className={styles.gridItem}>
-                {item[key]}
-                {key === "price" && (
-                  <button className={styles.iconButton}>
-                    <IoIosAddCircle
-                      // size={18}
-                      style={
-                        {
-                          // marginLeft: "20px",
-                        }
-                      }
-                    />
-                  </button>
-                )}
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
-    </>
-  ))}
-</div>
-</section> */
-}
-
-{
-  /* <div className={`${styles.flexContainer} ${styles.head}`}>
-<h3 className={styles.flexItem}>Name</h3>
-<h3 className={styles.flexItem}>Description</h3>
-<h3 className={styles.flexItem}>Price</h3>
-<h3 className={styles.flexItem}>add to cart</h3>
-</div>
-{items.map((item) => (
-<div className={styles.flexContainer}>
-  <p className={styles.flexItem}>{item.name}</p>
-  <p className={styles.flexItem}>{item.description}</p>
-  <p className={styles.flexItem}>{item.price}</p>
-  <div className={styles.flexItem}>
-    <button className={styles.iconButton}></button>
-  </div>
-</div>
-))} */
-}
