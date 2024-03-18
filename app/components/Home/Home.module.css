@@ -11,6 +11,16 @@
   left: 90%;
   color: grey;
   cursor: pointer;
+  opacity: 0.8;
+  transition: all 0.3s ease-in-out;
+  -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  -ms-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
+}
+
+.cartBadge:hover {
+  opacity: 1;
 }
 
 .cartNumber {

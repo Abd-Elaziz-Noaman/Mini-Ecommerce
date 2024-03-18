@@ -1,5 +1,6 @@
 .itemsContainer {
   width: 70%;
+  max-height: 500px;
   margin: auto;
   border: 1px solid rgba(0, 0, 0, 0.3);
   border-radius: 8px;
@@ -40,6 +41,11 @@
   width: 100%;
   border-collapse: collapse;
 }
+
+.thead {
+  position: static;
+}
+
 .th,
 .td {
   height: 50px;
