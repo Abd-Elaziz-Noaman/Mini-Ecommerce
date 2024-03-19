@@ -1,9 +1,11 @@
 "use client";
 
-import styles from "./cart.module.css";
+import { toast } from "react-toastify";
+
+import styles from "../cart/cart.module.css";
+import checkoutStyles from "./checkout.module.css";
 import ItemsTable from "../components/ItemsTable/ItemsTable";
 import useCartStore from "../store/cart";
-import Link from "next/link";
 
 interface Item {
   id: number;
@@ -12,8 +14,12 @@ interface Item {
   price: number;
 }
 
-export default function Cart() {
+export default function Checkout() {
   const { items }: any = useCartStore();
+
+  const submitHandler = () => {
+    setTimeout(() => toast.success("Order has been submitted."), 200);
+  };
 
   const totalPrice = items.reduce((accumulator: number, currentItem: Item) => {
     return accumulator + currentItem.price;
@@ -21,20 +27,21 @@ export default function Cart() {
 
   return (
     <main className={styles.main}>
-      <p className={styles.title}>Your Cart</p>
+      <p className={styles.title}>Checkout</p>
       <br />
       <ItemsTable items={items} />
       <br />
       <section className={styles.detailsContainer}>
         <h1 style={{ color: "#000", fontWeight: "800" }}>
-          Total price: {totalPrice}
+          Total price: {totalPrice} EGP
         </h1>
-        <Link href="/checkout">
-          <button className={styles.proceedToCheckoutBtn}>
-            Proceed to checkout
-          </button>
-        </Link>
+        <h1 style={{ color: "#000", fontWeight: "800" }}>
+          Total Items: {items.length}
+        </h1>
       </section>
+      <button className={checkoutStyles.submitBtn} onClick={submitHandler}>
+        Submit Your Order
+      </button>
     </main>
   );
 }

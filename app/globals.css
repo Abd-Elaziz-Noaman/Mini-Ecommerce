@@ -105,3 +105,30 @@ a {
     color-scheme: dark;
   }
 }
+
+/* ----------------------------------------- Scroll Bar -------------------------------------------- */
+
+/* Style the scrollbar */
+::-webkit-scrollbar {
+  width: 10px; /* Adjust the width as needed */
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #6b6b6b;
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #a0a0a0; /* Color of the scrollbar track */
+}
+
+/* Optional: Add hover effect to scrollbar handle */
+::-webkit-scrollbar-thumb:hover {
+  background: #464646; /* Change color on hover */
+}

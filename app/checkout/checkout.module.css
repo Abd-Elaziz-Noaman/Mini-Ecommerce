@@ -1,31 +1,13 @@
-.main {
-  height: 100%;
-  min-height: 100vh;
-  width: 100%;
-  background-color: #fff;
-  padding-top: 3rem;
-}
-
-.title {
-  text-align: center;
-  color: #000;
-  font-size: 3rem;
-  font-weight: bold;
-  letter-spacing: 2px;
-}
-
-.detailsContainer {
-  width: 70%;
-  margin: auto;
-  display: flex;
-  justify-content: space-between;
-}
-
-.proceedToCheckoutBtn {
-  width: fit-content;
+.submitBtn {
+  width: 30%;
   padding: 0.8rem 1.2rem;
   font-size: 1rem;
+  font-weight: bold;
+  letter-spacing: 3px;
   cursor: pointer;
+  margin-left: 35%;
+  margin-top: 70px;
+  margin-bottom: 50px;
   background-color: #000;
   color: #fff;
   opacity: 0.7;
@@ -43,15 +25,21 @@
   -o-transition: all 0.3s ease-in-out;
 }
 
-.proceedToCheckoutBtn:hover {
+.submitBtn:hover {
   opacity: 1;
 }
 
+@media screen and (max-width: 992px) {
+  .submitBtn {
+    width: 50%;
+    margin-left: 25%;
+  }
+}
+
 @media screen and (max-width: 768px) {
-  .detailsContainer {
-    width: 90%;
-    height: 100px;
-    flex-direction: column;
-    align-items: center;
+  .submitBtn {
+    width: 70%;
+    margin-left: 15%;
+    font-size: 0.8rem;
   }
 }

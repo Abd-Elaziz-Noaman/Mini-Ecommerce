@@ -24,6 +24,8 @@ const HomePage = () => {
   const [priceFilter, setPriceFilter] = useState<number | null>(null);
   const [minPrice, setMinPrice] = useState<number | null>(null);
   const [maxPrice, setMaxPrice] = useState<number | null>(null);
+  const [sortBy, setSortBy] = useState<string>("");
+  const [sortOrder, setSortOrder] = useState<string>("asc");
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
@@ -65,6 +67,17 @@ const HomePage = () => {
     setMaxPrice(value);
   };
 
+  const sortHandler = (sortField: string) => {
+    // Toggle sorting order if the same criteria is clicked again
+    if (sortBy === sortField) {
+      setSortOrder(sortOrder === "asc" ? "desc" : "asc");
+    } else {
+      setSortBy(sortField);
+      setSortOrder("asc");
+    }
+  };
+
+  // filter items according to filter inputs
   const filteredItems = fetchedItems.filter((item) => {
     const nameMatch = item.name
       .toLowerCase()
@@ -75,7 +88,25 @@ const HomePage = () => {
       (maxPrice === null || item.price <= maxPrice);
     return nameMatch && priceFilterMatch && priceRangeMatch;
   });
-  // console.log("🚀 ~ filteredItems ~ filteredItems:", filteredItems);
+
+  // sort items according to sorting order
+  const sortedItems = filteredItems.sort((a, b) => {
+    if (sortBy === "name") {
+      if (sortOrder === "asc") {
+        return a.name.localeCompare(b.name);
+      } else {
+        return b.name.localeCompare(a.name);
+      }
+    } else if (sortBy === "price") {
+      if (sortOrder === "asc") {
+        return a.price - b.price;
+      } else {
+        return b.price - a.price;
+      }
+    } else {
+      return 0;
+    }
+  });
 
   if (loading)
     return (
@@ -129,7 +160,12 @@ const HomePage = () => {
         </div>
       </div>
       <br />
-      <ItemsTable items={filteredItems} />
+      <ItemsTable
+        items={sortedItems}
+        sortHandler={sortHandler}
+        sortBy={sortBy}
+        sortOrder={sortOrder}
+      />
     </main>
   );
 };

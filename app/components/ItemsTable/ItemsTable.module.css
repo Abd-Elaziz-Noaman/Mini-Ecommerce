@@ -57,6 +57,7 @@
   background-color: #000;
   color: #fff;
   font-weight: bold;
+  cursor: pointer;
 }
 
 .tbody {
@@ -66,6 +67,41 @@
 
 .tr {
   border-bottom: 1px solid grey;
+}
+
+.nodataContainer {
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.link {
+  margin-top: 5px;
+  cursor: pointer;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+
+.tip {
+  position: fixed;
+  left: 10px;
+  bottom: 20px;
+  width: fit-content;
+  padding: 0.5rem 0.8rem;
+  font-size: 0.8rem;
+  background-color: #000;
+  color: #fff;
+  cursor: not-allowed;
+  border-radius: 30px;
+  -webkit-border-radius: 30px;
+  -moz-border-radius: 30px;
+  -ms-border-radius: 30px;
+  -o-border-radius: 30px;
 }
 
 @media screen and (max-width: 992px) {
@@ -81,6 +117,11 @@
 
   .tr {
     margin-bottom: 12px;
+  }
+
+  .tip {
+    left: 25%;
+    bottom: 10px;
   }
 }
 
