@@ -63,14 +63,17 @@ const HomePage = () => {
     setMaxPrice(value);
   };
 
-  const sortHandler = useCallback((sortField: string) => {
-    if (sortBy === sortField) {
-      setSortOrder(sortOrder === "asc" ? "desc" : "asc");
-    } else {
-      setSortBy(sortField);
-      setSortOrder("asc");
-    }
-  }, []);
+  const sortHandler = useCallback(
+    (sortField: string) => {
+      if (sortBy === sortField) {
+        setSortOrder(sortOrder === "asc" ? "desc" : "asc");
+      } else {
+        setSortBy(sortField);
+        setSortOrder("asc");
+      }
+    },
+    [sortBy, sortOrder]
+  );
 
   // filter items according to filter inputs
   const filteredItems = fetchedItems.filter((item) => {

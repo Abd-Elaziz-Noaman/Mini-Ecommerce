@@ -92,7 +92,7 @@ const ItemsTable = ({
         <div className={styles.nodataContainer}>
           <h1>There are no items yet!</h1>
           <Link href="/">
-            <h2 className={styles.link}>Let's add some?</h2>
+            <h2 className={styles.link}>Let&apos;s add some?</h2>
           </Link>
         </div>
       )}
