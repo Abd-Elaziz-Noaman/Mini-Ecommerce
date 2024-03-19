@@ -4,6 +4,7 @@ import { useState, useEffect, ChangeEvent, useCallback } from "react";
 import { FaShoppingCart } from "react-icons/fa";
 import Link from "next/link";
 import PuffLoader from "react-spinners/PuffLoader";
+import { toast } from "react-toastify";
 
 import useCartStore from "../../store/cart";
 
@@ -41,6 +42,7 @@ const HomePage = () => {
     } catch (error: any) {
       console.log(error.message);
       setLoading(false);
+      toast.error("Error in fetching Data");
     }
   };
 

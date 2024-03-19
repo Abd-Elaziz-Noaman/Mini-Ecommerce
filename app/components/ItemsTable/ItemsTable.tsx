@@ -90,10 +90,16 @@ const ItemsTable = ({
       </table>
       {!items.length && (
         <div className={styles.nodataContainer}>
-          <h1>There are no items yet!</h1>
-          <Link href="/">
-            <h2 className={styles.link}>Let&apos;s add some?</h2>
-          </Link>
+          {pathname === "/" ? (
+            <h1>No Search Matches!</h1>
+          ) : (
+            <>
+              <h1>There are no items yet!</h1>
+              <Link href="/">
+                <h2 className={styles.link}>Let&apos;s add some?</h2>
+              </Link>
+            </>
+          )}
         </div>
       )}
       <div className={styles.tip}>Click on table head to sort</div>
