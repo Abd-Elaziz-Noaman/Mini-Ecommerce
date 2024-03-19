@@ -12,12 +12,9 @@ const useCartStore = create((set) => ({
   addItem: (item: Item) =>
     set((state: any) => ({ cartItems: [...state.cartItems, item] })),
   removeItem: (itemId: number) =>
-    set((state: any) => {
-      console.log("🚀 ~ set ~ state:", state);
-      return {
-        cartItems: state.cartItems.filter((item: Item) => item.id !== itemId),
-      };
-    }),
+    set((state: any) => ({
+      cartItems: state.cartItems.filter((item: Item) => item.id !== itemId),
+    })),
 }));
 
 export default useCartStore;
