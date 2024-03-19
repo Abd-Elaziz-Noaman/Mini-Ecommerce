@@ -15,9 +15,9 @@ interface Item {
 
 interface ItemsTableProps {
   items: Item[];
-  sortHandler: (sortField: string) => void;
-  sortBy: string;
-  sortOrder: string;
+  sortHandler?: (sortField: string) => void;
+  sortBy?: string;
+  sortOrder?: string;
 }
 
 const ItemsTable = ({
@@ -43,7 +43,7 @@ const ItemsTable = ({
         <thead className={styles.thead}>
           <tr className={styles.tr}>
             {pathname === "/" ? (
-              <th className={styles.th} onClick={() => sortHandler("name")}>
+              <th className={styles.th} onClick={() => sortHandler?.("name")}>
                 Name {sortBy === "name" && (sortOrder === "asc" ? "▲" : "▼")}
               </th>
             ) : (
@@ -51,7 +51,7 @@ const ItemsTable = ({
             )}
             <th className={styles.th}>Description</th>
             {pathname === "/" ? (
-              <th className={styles.th} onClick={() => sortHandler("price")}>
+              <th className={styles.th} onClick={() => sortHandler?.("price")}>
                 Price {sortBy === "price" && (sortOrder === "asc" ? "▲" : "▼")}
               </th>
             ) : (
