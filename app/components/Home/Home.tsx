@@ -64,7 +64,6 @@ const HomePage = () => {
   };
 
   const sortHandler = useCallback((sortField: string) => {
-    // Toggle sorting order if the same criteria is clicked again
     if (sortBy === sortField) {
       setSortOrder(sortOrder === "asc" ? "desc" : "asc");
     } else {

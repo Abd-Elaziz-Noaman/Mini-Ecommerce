@@ -7,12 +7,6 @@ interface Item {
   price: number;
 }
 
-// type CartStore = {
-//   items: Item[];
-//   addItems: (item: Item) => void;
-//   removeItems: (itemId: number) => void;
-// };
-
 const useCartStore = create((set) => ({
   cartItems: [],
   addItem: (item: Item) =>
