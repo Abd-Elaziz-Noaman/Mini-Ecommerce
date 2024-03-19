@@ -1,4 +1,5 @@
 import { IoIosAddCircle } from "react-icons/io";
+import useCartStore from "../../store/cart";
 
 import styles from "./ItemsTable.module.css";
 
@@ -14,6 +15,12 @@ interface ItemsTableProps {
 }
 
 export default function ItemsTable({ items }: ItemsTableProps) {
+  const { addItem }: any = useCartStore();
+
+  const addItemHandler = (item: Item) => {
+    addItem(item);
+  };
+
   return (
     <section className={styles.itemsContainer}>
       <table className={styles.table}>
@@ -32,7 +39,10 @@ export default function ItemsTable({ items }: ItemsTableProps) {
               <td className={styles.td}>{item.description}</td>
               <td className={styles.td}>{item.price}</td>
               <td className={styles.td}>
-                <button className={styles.iconButton}>
+                <button
+                  className={styles.iconButton}
+                  onClick={() => addItemHandler(item)}
+                >
                   <IoIosAddCircle />
                 </button>
               </td>

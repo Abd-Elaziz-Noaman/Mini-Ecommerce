@@ -93,6 +93,10 @@
   -o-border-radius: 8px;
 }
 
+.loadingWrapper {
+  margin: auto;
+}
+
 @media screen and (max-width: 992px) {
   .searchbarContainer {
     width: 60%;

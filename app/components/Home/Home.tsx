@@ -2,6 +2,10 @@
 
 import { useState, useEffect, ChangeEvent } from "react";
 import { FaShoppingCart } from "react-icons/fa";
+import Link from "next/link";
+import PuffLoader from "react-spinners/PuffLoader";
+
+import useCartStore from "../../store/cart";
 
 import styles from "./Home.module.css";
 import ItemsTable from "../ItemsTable/ItemsTable";
@@ -14,26 +18,33 @@ interface Item {
 }
 
 const HomePage = () => {
-  const [items, setItems] = useState<Item[]>([]);
+  const { items }: any = useCartStore();
+  const [fetchedItems, setFetchedItems] = useState<Item[]>([]);
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [priceFilter, setPriceFilter] = useState<number | null>(null);
   const [minPrice, setMinPrice] = useState<number | null>(null);
   const [maxPrice, setMaxPrice] = useState<number | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     fetchItems();
   }, []);
 
   const fetchItems = async () => {
+    console.log(loading);
     try {
       const response = await fetch("/itemsData.json");
       const jsonData = await response.json();
-      console.log("🚀 ~ fetchItems ~ jsonData:", jsonData);
-      setItems(jsonData);
+      // console.log("🚀 ~ fetchItems ~ jsonData:", jsonData);
+      setFetchedItems(jsonData);
+      setLoading(false);
     } catch (error: any) {
       console.log(error.message);
+      setLoading(false);
     }
+    console.log(loading);
   };
+  console.log("afterrrr", loading);
 
   const searchHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value);
@@ -54,7 +65,7 @@ const HomePage = () => {
     setMaxPrice(value);
   };
 
-  const filteredItems = items.filter((item) => {
+  const filteredItems = fetchedItems.filter((item) => {
     const nameMatch = item.name
       .toLowerCase()
       .includes(searchQuery.toLowerCase());
@@ -64,14 +75,23 @@ const HomePage = () => {
       (maxPrice === null || item.price <= maxPrice);
     return nameMatch && priceFilterMatch && priceRangeMatch;
   });
-  console.log("🚀 ~ filteredItems ~ filteredItems:", filteredItems);
+  // console.log("🚀 ~ filteredItems ~ filteredItems:", filteredItems);
+
+  if (loading)
+    return (
+      <div className={styles.loadingWrapper}>
+        <PuffLoader color="#000" size={100} loading speedMultiplier={3} />
+      </div>
+    );
 
   return (
     <main className={styles.main}>
-      <div className={styles.cartBadge}>
-        <FaShoppingCart size={50} />
-        <p className={styles.cartNumber}>4</p>
-      </div>
+      <Link href="/cart">
+        <div className={styles.cartBadge}>
+          <FaShoppingCart size={50} />
+          <p className={styles.cartNumber}>{items.length}</p>
+        </div>
+      </Link>
       <div className={styles.searchbarContainer}>
         <input
           type="text"
