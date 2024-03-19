@@ -15,28 +15,31 @@ interface Item {
 }
 
 export default function Checkout() {
-  const { items }: any = useCartStore();
+  const { cartItems }: any = useCartStore();
 
   const submitHandler = () => {
     setTimeout(() => toast.success("Order has been submitted."), 200);
   };
 
-  const totalPrice = items.reduce((accumulator: number, currentItem: Item) => {
-    return accumulator + currentItem.price;
-  }, 0);
+  const totalPrice = cartItems.reduce(
+    (accumulator: number, currentItem: Item) => {
+      return accumulator + currentItem.price;
+    },
+    0
+  );
 
   return (
     <main className={styles.main}>
       <p className={styles.title}>Checkout</p>
       <br />
-      <ItemsTable items={items} />
+      <ItemsTable items={cartItems} />
       <br />
       <section className={styles.detailsContainer}>
         <h1 style={{ color: "#000", fontWeight: "800" }}>
           Total price: {totalPrice} EGP
         </h1>
         <h1 style={{ color: "#000", fontWeight: "800" }}>
-          Total Items: {items.length}
+          Total Items: {cartItems.length}
         </h1>
       </section>
       <button className={checkoutStyles.submitBtn} onClick={submitHandler}>

@@ -14,13 +14,16 @@ interface Item {
 // };
 
 const useCartStore = create((set) => ({
-  items: [],
+  cartItems: [],
   addItem: (item: Item) =>
-    set((state: any) => ({ items: [...state.items, item] })),
+    set((state: any) => ({ cartItems: [...state.cartItems, item] })),
   removeItem: (itemId: number) =>
-    set((state: any) => ({
-      items: state.items.filter((item: Item) => item.id !== itemId),
-    })),
+    set((state: any) => {
+      console.log("🚀 ~ set ~ state:", state);
+      return {
+        cartItems: state.cartItems.filter((item: Item) => item.id !== itemId),
+      };
+    }),
 }));
 
 export default useCartStore;

@@ -1,9 +1,10 @@
 import { usePathname } from "next/navigation";
-import { IoIosAddCircle } from "react-icons/io";
+import { IoIosAddCircle, IoIosRemoveCircle } from "react-icons/io";
 import useCartStore from "../../store/cart";
 
 import styles from "./ItemsTable.module.css";
 import Link from "next/link";
+import { memo } from "react";
 
 interface Item {
   id: number;
@@ -19,17 +20,21 @@ interface ItemsTableProps {
   sortOrder: string;
 }
 
-export default function ItemsTable({
+const ItemsTable = ({
   items,
   sortHandler,
   sortBy,
   sortOrder,
-}: ItemsTableProps) {
-  const { addItem }: any = useCartStore();
+}: ItemsTableProps) => {
+  const { cartItems, addItem, removeItem }: any = useCartStore();
   const pathname = usePathname();
 
   const addItemHandler = (item: Item) => {
     addItem(item);
+  };
+
+  const removeItemHandler = (itemId: number) => {
+    removeItem(itemId);
   };
 
   return (
@@ -52,7 +57,9 @@ export default function ItemsTable({
             ) : (
               <th className={styles.th}>Price</th>
             )}
-            <th className={styles.th}>add to cart</th>
+            <th className={styles.th}>
+              {pathname === "/" ? "add/remove to cart" : "remove from cart"}
+            </th>
           </tr>
         </thead>
         <tbody className={styles.tbody}>
@@ -64,9 +71,17 @@ export default function ItemsTable({
               <td className={styles.td}>
                 <button
                   className={styles.iconButton}
-                  onClick={() => addItemHandler(item)}
+                  onClick={() =>
+                    !cartItems.some((ele: Item) => ele.id === item.id)
+                      ? addItemHandler(item)
+                      : removeItemHandler(item.id)
+                  }
                 >
-                  <IoIosAddCircle />
+                  {!cartItems.some((ele: Item) => ele.id === item.id) ? (
+                    <IoIosAddCircle />
+                  ) : (
+                    <IoIosRemoveCircle />
+                  )}
                 </button>
               </td>
             </tr>
@@ -84,4 +99,6 @@ export default function ItemsTable({
       <div className={styles.tip}>Click on table head to sort</div>
     </section>
   );
-}
+};
+
+export default memo(ItemsTable);

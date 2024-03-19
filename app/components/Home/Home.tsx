@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, ChangeEvent } from "react";
+import { useState, useEffect, ChangeEvent, useCallback } from "react";
 import { FaShoppingCart } from "react-icons/fa";
 import Link from "next/link";
 import PuffLoader from "react-spinners/PuffLoader";
@@ -18,7 +18,7 @@ interface Item {
 }
 
 const HomePage = () => {
-  const { items }: any = useCartStore();
+  const { cartItems }: any = useCartStore();
   const [fetchedItems, setFetchedItems] = useState<Item[]>([]);
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [priceFilter, setPriceFilter] = useState<number | null>(null);
@@ -33,20 +33,16 @@ const HomePage = () => {
   }, []);
 
   const fetchItems = async () => {
-    console.log(loading);
     try {
       const response = await fetch("/itemsData.json");
       const jsonData = await response.json();
-      // console.log("🚀 ~ fetchItems ~ jsonData:", jsonData);
       setFetchedItems(jsonData);
       setLoading(false);
     } catch (error: any) {
       console.log(error.message);
       setLoading(false);
     }
-    console.log(loading);
   };
-  console.log("afterrrr", loading);
 
   const searchHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value);
@@ -67,7 +63,7 @@ const HomePage = () => {
     setMaxPrice(value);
   };
 
-  const sortHandler = (sortField: string) => {
+  const sortHandler = useCallback((sortField: string) => {
     // Toggle sorting order if the same criteria is clicked again
     if (sortBy === sortField) {
       setSortOrder(sortOrder === "asc" ? "desc" : "asc");
@@ -75,7 +71,7 @@ const HomePage = () => {
       setSortBy(sortField);
       setSortOrder("asc");
     }
-  };
+  }, []);
 
   // filter items according to filter inputs
   const filteredItems = fetchedItems.filter((item) => {
@@ -120,7 +116,7 @@ const HomePage = () => {
       <Link href="/cart">
         <div className={styles.cartBadge}>
           <FaShoppingCart size={50} />
-          <p className={styles.cartNumber}>{items.length}</p>
+          <p className={styles.cartNumber}>{cartItems.length}</p>
         </div>
       </Link>
       <div className={styles.searchbarContainer}>
