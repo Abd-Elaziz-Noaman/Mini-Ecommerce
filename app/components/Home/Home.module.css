@@ -7,8 +7,8 @@
   position: absolute;
   height: fit-content;
   width: fit-content;
-  top: 50;
-  left: 90%;
+  top: 40px;
+  right: 40px;
   color: grey;
   cursor: pointer;
   opacity: 0.8;
@@ -113,6 +113,17 @@
   .filterInput {
     width: 40%;
   }
+
+  .cartBadge {
+    top: 30px;
+    right: 20px;
+  }
+
+  .cartNumber {
+    height: 20px;
+    width: 20px;
+    font-size: 1rem;
+  }
 }
 
 @media screen and (max-width: 768px) {
@@ -131,10 +142,20 @@
   .filterInput {
     width: 45%;
   }
+
+  .cartBadge {
+    top: 20px;
+    right: 10px;
+  }
 }
 
 @media screen and (max-width: 600px) {
   .filtersContainer {
     width: 95%;
+  }
+
+  .cartBadge {
+    top: 20px;
+    right: 3px;
   }
 }

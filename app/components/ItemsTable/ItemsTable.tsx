@@ -1,3 +1,4 @@
+import { usePathname } from "next/navigation";
 import { IoIosAddCircle } from "react-icons/io";
 import useCartStore from "../../store/cart";
 
@@ -25,6 +26,7 @@ export default function ItemsTable({
   sortOrder,
 }: ItemsTableProps) {
   const { addItem }: any = useCartStore();
+  const pathname = usePathname();
 
   const addItemHandler = (item: Item) => {
     addItem(item);
@@ -35,13 +37,21 @@ export default function ItemsTable({
       <table className={styles.table}>
         <thead className={styles.thead}>
           <tr className={styles.tr}>
-            <th className={styles.th} onClick={() => sortHandler("name")}>
-              Name {sortBy === "name" && (sortOrder === "asc" ? "▲" : "▼")}
-            </th>
+            {pathname === "/" ? (
+              <th className={styles.th} onClick={() => sortHandler("name")}>
+                Name {sortBy === "name" && (sortOrder === "asc" ? "▲" : "▼")}
+              </th>
+            ) : (
+              <th className={styles.th}>Name</th>
+            )}
             <th className={styles.th}>Description</th>
-            <th className={styles.th} onClick={() => sortHandler("price")}>
-              Price {sortBy === "price" && (sortOrder === "asc" ? "▲" : "▼")}
-            </th>
+            {pathname === "/" ? (
+              <th className={styles.th} onClick={() => sortHandler("price")}>
+                Price {sortBy === "price" && (sortOrder === "asc" ? "▲" : "▼")}
+              </th>
+            ) : (
+              <th className={styles.th}>Price</th>
+            )}
             <th className={styles.th}>add to cart</th>
           </tr>
         </thead>
