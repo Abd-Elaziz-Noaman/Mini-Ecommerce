@@ -1,6 +1,7 @@
 "use client";
 
 import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
 
 import styles from "../cart/cart.module.css";
 import checkoutStyles from "./checkout.module.css";
@@ -15,10 +16,25 @@ interface Item {
 }
 
 export default function Checkout() {
-  const { cartItems }: any = useCartStore();
+  const { cartItems, resetCartItems }: any = useCartStore();
+  const router = useRouter();
 
-  const submitHandler = () => {
-    setTimeout(() => toast.success("Order has been submitted."), 200);
+  const submitHandler = async () => {
+    await new Promise<void>((resolve) => {
+      setTimeout(() => {
+        toast.success("Order has been submitted.");
+        resolve();
+      }, 200);
+    });
+
+    await new Promise<void>((resolve) => {
+      setTimeout(() => {
+        router.push("/");
+        resolve();
+      }, 2000);
+    });
+
+    resetCartItems();
   };
 
   const totalPrice = cartItems.reduce(

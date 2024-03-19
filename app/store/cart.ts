@@ -15,6 +15,7 @@ const useCartStore = create((set) => ({
     set((state: any) => ({
       cartItems: state.cartItems.filter((item: Item) => item.id !== itemId),
     })),
+  resetCartItems: () => set({ cartItems: [] }),
 }));
 
 export default useCartStore;
